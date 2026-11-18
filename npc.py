@@ -28,13 +28,12 @@ class Npc:
         return stats
 
     def generate_npc_tendencies(self):
-        # Randomly generate NPC tendencies
-        #TODO: Generate to sum to 1.0 and distribute
+        # Integer counts of d100 values (1-100) per tendency; each gets at least one, sum is 100
         #TODO: Potentially base tendencies on stats (e.g. high animal handling = less likely to ride braced)
-        tendencies = {}
-        for tendency in ["aggressive", "defensive", "braced", "highInSaddle", "eyesFixed"]:
-            tendencies[tendency] = random.uniform(0, 1)
-        return tendencies
+        names = ["aggressive", "defensive", "braced", "highInSaddle", "eyesFixed"]
+        cuts = sorted(random.sample(range(1, 100), k=len(names) - 1))
+        bounds = [0] + cuts + [100]
+        return {name: bounds[i + 1] - bounds[i] for i, name in enumerate(names)}
 
     def __init__(self, name: str|None, race: str|None, nationality: str|None, stats: dict|None = None, tendencies: dict|None = None):
         if name is None:

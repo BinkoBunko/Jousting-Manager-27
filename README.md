@@ -8,7 +8,7 @@ Rules reference: [JOUSTING_RULES.md](JOUSTING_RULES.md) (from [Homebrew Homuncul
 
 - **NPC generation** ([npc.py](npc.py)): random name, race (Human, Elf, Dwarf), and nationality, plus:
   - **Stats** (Strength, Animal Handling, AC) drawn from normal distributions.
-  - **Tendencies** (Aggressive, Defensive, Braced, High in Saddle, Eyes Fixed) with random values from 0 to 1.
+  - **Tendencies** (Aggressive, Defensive, Braced, High in Saddle, Eyes Fixed) as whole numbers that sum to 100, so each tendency maps to a range of d100 results (1 to 100). Each tendency gets at least 1.
 - **Stat distributions** are configured in [variables.py](variables.py) (means and standard deviations).
 - **Persistence** ([db.py](db.py)): NPCs are appended to `db.json`, which is created on first use. The file is git-ignored, so each machine keeps its own data.
 
@@ -63,11 +63,11 @@ WIP
   "nationality": "Damaran",
   "stats": { "strength": 10, "animalHandling": 4, "ac": 10 },
   "tendencies": {
-    "aggressive": 0.2,
-    "defensive": 0.2,
-    "braced": 0.2,
-    "highInSaddle": 0.2,
-    "eyesFixed": 0.2
+    "aggressive": 28,
+    "defensive": 8,
+    "braced": 25,
+    "highInSaddle": 22,
+    "eyesFixed": 17
   }
 }
 ```
@@ -79,7 +79,6 @@ These are noted in the source code:
 - Connect name generation to a name generator API.
 - Manual npc creation.
 - Move races and nationalities into the database or a game data source.
-- Generate tendencies that sum to 1.0.
 - Base tendencies on stats (for example, high Animal Handling makes riding braced less likely).
 - Build the GUI in `app.py` with CustomTkinter.
 - Tournament simulator functionality.
