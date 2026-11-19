@@ -19,6 +19,8 @@ print(f"Max Animal Handling: {max(npc.stats['animalHandling'] for npc in npcs)}"
 print(f"Min AC: {min(npc.stats['ac'] for npc in npcs)}")
 print(f"Max AC: {max(npc.stats['ac'] for npc in npcs)}")
 
+print(f"Min None: {min(npc.tendencies['none'] for npc in npcs)}")
+print(f"Max None: {max(npc.tendencies['none'] for npc in npcs)}")
 print(f"Min Aggressive: {min(npc.tendencies['aggressive'] for npc in npcs)}")
 print(f"Max Aggressive: {max(npc.tendencies['aggressive'] for npc in npcs)}")
 print(f"Min Defensive: {min(npc.tendencies['defensive'] for npc in npcs)}")

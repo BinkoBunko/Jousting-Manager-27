@@ -31,6 +31,7 @@ def add_npcs(npcs: Iterable[Npc], database_path: str | Path = DATABASE_PATH) -> 
             "nationality": npc.nationality,
             "stats": npc.stats,
             "tendencies": npc.tendencies,
+            "shieldProficient": npc.shield_proficient,
         }
         for npc in npcs
     )

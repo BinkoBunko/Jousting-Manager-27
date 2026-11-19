@@ -26,30 +26,33 @@ def test_constructor_generates_values_for_missing_fields(monkeypatch):
     gauss_values = iter((12.6, 7.4, 15.7))
     monkeypatch.setattr(npc.random, "choice", lambda options: next(choices))
     monkeypatch.setattr(npc.random, "gauss", lambda mean, deviation: next(gauss_values))
-    monkeypatch.setattr(npc.random, "sample", lambda population, k: [10, 30, 50, 70])
+    monkeypatch.setattr(npc.random, "sample", lambda population, k: [10, 30, 50, 70, 90])
 
     jouster = Npc(None, None, None)
 
     assert jouster.name == "Arin Ashford"
     assert jouster.race == "Dwarf"
     assert jouster.nationality == "Damaran"
-    assert jouster.stats == {"strength": 13, "animalHandling": 7, "ac": 16}
+    assert jouster.stats == {"strength": 13, "animalHandling": 7, "ac": 16, "proficiency": 2}
+    assert jouster.shield_proficient is True
     assert jouster.tendencies == {
-        "aggressive": 10,
+        "none": 10,
+        "aggressive": 20,
         "defensive": 20,
         "braced": 20,
         "highInSaddle": 20,
-        "eyesFixed": 30,
+        "eyesFixed": 10,
     }
 
 
 def test_generated_tendencies_are_positive_and_sum_to_100(monkeypatch):
-    monkeypatch.setattr(npc.random, "sample", lambda population, k: [80, 20, 60, 40])
+    monkeypatch.setattr(npc.random, "sample", lambda population, k: [80, 20, 60, 40, 90])
 
     jouster = Npc("Arin Ashford", "Elf", "Damaran", {}, {})
     tendencies = jouster.generate_npc_tendencies()
 
     assert set(tendencies) == {
+        "none",
         "aggressive",
         "defensive",
         "braced",

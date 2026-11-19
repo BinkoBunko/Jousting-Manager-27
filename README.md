@@ -19,6 +19,8 @@ Rules reference: [JOUSTING_RULES.md](JOUSTING_RULES.md) (from [Homebrew Homuncul
 | `npc.py` | `Npc` class: random generation and string formatting |
 | `variables.py` | Currently stores Stat means and standard deviations but planning more |
 | `db.py` | Load and save NPC records in `db.json` |
+| `joust.py` | 1v1 match engine: runs passes between two NPCs until a winner is decided |
+| `dice.py` | Dice expression and structured roll helpers |
 | `appConsole.py` | Command-line entry point that generates and reports NPCs (for development) |
 | `app.py` | Reserved for the GUI (currently empty) |
 | `JOUSTING_RULES.md` | Jousting rules and maneuver summary |
@@ -52,6 +54,14 @@ python app.py
 
 WIP
 
+To run a simulated 1v1 match between two random NPCs and print the pass-by-pass log:
+
+```powershell
+python joust.py
+```
+
+A match ends when one jouster is unhorsed (and the other is not), or when a jouster reaches 3 lances broken (hits) while the other has fewer. If both are unhorsed on the same pass, the joust continues.
+
 ## Database Format
 
 `db.json` holds a JSON array of NPC records:
@@ -61,14 +71,16 @@ WIP
   "name": "Eryn Caldwell",
   "race": "Dwarf",
   "nationality": "Damaran",
-  "stats": { "strength": 10, "animalHandling": 4, "ac": 10 },
+  "stats": { "strength": 10, "animalHandling": 4, "ac": 10, "proficiency": 2 },
   "tendencies": {
-    "aggressive": 28,
+    "none": 10,
+    "aggressive": 18,
     "defensive": 8,
     "braced": 25,
     "highInSaddle": 22,
     "eyesFixed": 17
-  }
+  },
+  "shieldProficient": true
 }
 ```
 

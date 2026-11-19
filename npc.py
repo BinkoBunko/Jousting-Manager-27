@@ -25,17 +25,18 @@ class Npc:
         stats["strength"] = round(random.gauss(AVG_STR, STD_DEV_STR))
         stats["animalHandling"] = round(random.gauss(AVG_ANIMAL_HANDLING, STD_DEV_ANIMAL_HANDLING))
         stats["ac"] = round(random.gauss(AVG_AC, STD_DEV_AC))
+        stats["proficiency"] = DEFAULT_PROFICIENCY
         return stats
 
     def generate_npc_tendencies(self):
         # Integer counts of d100 values (1-100) per tendency; each gets at least one, sum is 100
         #TODO: Potentially base tendencies on stats (e.g. high animal handling = less likely to ride braced)
-        names = ["aggressive", "defensive", "braced", "highInSaddle", "eyesFixed"]
+        names = ["none", "aggressive", "defensive", "braced", "highInSaddle", "eyesFixed"]
         cuts = sorted(random.sample(range(1, 100), k=len(names) - 1))
         bounds = [0] + cuts + [100]
         return {name: bounds[i + 1] - bounds[i] for i, name in enumerate(names)}
 
-    def __init__(self, name: str|None, race: str|None, nationality: str|None, stats: dict|None = None, tendencies: dict|None = None):
+    def __init__(self, name: str|None, race: str|None, nationality: str|None, stats: dict|None = None, tendencies: dict|None = None, shield_proficient: bool = True):
         if name is None:
             name = self.generate_npc_name()
         if race is None:
@@ -53,6 +54,7 @@ class Npc:
         self.nationality = nationality
         self.stats = stats
         self.tendencies = tendencies
+        self.shield_proficient = shield_proficient
 
     def __str__(self) -> str:
         return (
